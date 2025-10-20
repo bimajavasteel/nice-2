@@ -307,7 +307,12 @@ if args.png:
         assembled = os.path.splitext(vid_out_name)[0] + "_ffmpeg_tmp" + os.path.splitext(vid_out_name)[1]
         # assemble PNGs into video with specified fps using ffmpeg (widely available on Kaggle).
         # -y overwrite, -r input fps, -i input pattern, -c:v libx264, -pix_fmt yuv420p for compatibility
-        ffmpeg_cmd = f"ffmpeg -y -hide_banner -loglevel error -r {int(np.round(args.fps))} -i vid_out/%06d.png -c:v libx264 -pix_fmt yuv420p "{assembled}""
+        ffmpeg_cmd = (
+    "ffmpeg -y -hide_banner -loglevel error "
+    f"-r {int(np.round(args.fps))} "
+    "-i vid_out/%06d.png -c:v libx264 -pix_fmt yuv420p "
+    f'"{assembled}"'
+)
         print("[INFO] Assembling frames with ffmpeg:", ffmpeg_cmd)
         os.system(ffmpeg_cmd)
         # try to transfer audio from source if available and requested
